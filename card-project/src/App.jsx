@@ -6,13 +6,27 @@ import "./App.css";
 function App() {
   const [count, setCount] = useState(0);
   const [data, setdata] = useState([]);
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts") // api for the post request
-      .then((response) => response.json())
-      .then((data) => setdata(data))
-      .catch((err)=>{console.log(err)})
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://jsonplaceholder.typicode.com/posts") // api for the post request
+  //     .then((response) => response.json())
+  //     .then((data) => setdata(data))
+  //     .catch((err)=>{console.log(err)})
+  // }, []);
+  //This is my own way
+  
+   const fetchData = async () => {
+    let a = await fetch("https://jsonplaceholder.typicode.com/posts") 
+    let data = await a.json();
+    setdata(data)
+    console.log(data)
+   }
 
+   useEffect(() => {
+    fetchData()
+   }, [])
+   
+   
+   
   return (
     <>
     <div className=" flex w-1/1 flex-wrap justify-center bg-[]">
@@ -32,3 +46,5 @@ function App() {
 }
 
 export default App;
+
+
