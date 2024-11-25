@@ -80,7 +80,7 @@ function App() {
       <Navbar />
       <div className="container bg-violet-200 mx-auto my-5 rounded-md p-2 min-h-[80vh]">
         <div className="container bg-white mx-auto my-5 rounded-md flex justify-between p-5 shadow-md">
-          <input onChange={handelInput} value={todo} type="text" placeholder="write something...." className=" w-1/2 border-none border-hidden bg-violet-100 rounded-md p-3"/>
+          <input onChange={handelInput} value={todo} type="text" placeholder="write something...." className=" w-1/2  bg-violet-100 rounded-md p-3"/>
           <button
             onClick={handelAdd}
             className="bg-[#8621eb] rounded-md px-10 text-white p-3"
