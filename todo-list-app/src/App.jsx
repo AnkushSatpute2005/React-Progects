@@ -12,27 +12,28 @@ function App() {
 
 
   useEffect(() => {
-    let todoString =localStorage.getItem("todos")
+    let todoString =localStorage.getItem("todos")// Retrieve the object from storage
     if(todoString){//it simply means todoString is not null 
-          let todos =JSON.parse(localStorage.getItem("todos"))
+          let todos =JSON.parse(todoString)
          setTodos(todos) 
       }  
 
-  }, [])
-  
+    }, [])
+    
+    const saveToLocalStorage = ()=>{
+      // Put the object into storage
+      localStorage.setItem("todos", JSON.stringify(todos))
+    }
 
-  const saveToLocalStorage = ()=>{
-    localStorage.setItem("todos", JSON.stringify(todos))
-  }
+    const handelInput = (e) => {
+      setTodo(e.target.value);
+    };
 
-  const handelInput = (e) => {
-    setTodo(e.target.value);
-  };
 
   const handelAdd = () => {
     setTodos([...todos, { id: uuidv4(), todo, isComplited: false }]); // uuidv4() function is use to generate unique ids,you can use this by simply importing it so search uuid npm on google
     setTodo("");
-    saveToLocalStorage();
+    saveToLocalStorage()
   };
 
   const handelCkeckBox = (e) => {
@@ -44,7 +45,7 @@ function App() {
     let newTodos = [...todos];
     newTodos[index].isComplited = !newTodos[index].isComplited;
     setTodos(newTodos);
-    saveToLocalStorage();
+    saveToLocalStorage()
   };
 
   const handelDelete = (e)=>{
@@ -56,7 +57,7 @@ function App() {
     let newTodos = [...todos]
     newTodos.splice(index,1)// here 2nd parameter  1  spesifies that only one item in arrat of object is remove 
     setTodos(newTodos);
-    saveToLocalStorage();
+    saveToLocalStorage()
   }
 
   const handelEdit = (e)=>{
@@ -70,7 +71,7 @@ function App() {
     let newTodos = [...todos]
     newTodos.splice(index,1)// here 2nd parameter  1  spesifies that only one item in arrat of object is remove 
     setTodos(newTodos);
-    saveToLocalStorage();
+    saveToLocalStorage()
 
   }
   
