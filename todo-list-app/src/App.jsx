@@ -3,12 +3,15 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import Navbar from "./components/Navbar";
 import { v4 as uuidv4 } from "uuid";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 
 // import './App.css'
 
 function App() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  let [showFinish, setShowFinish] = useState(true)
 
 
   useEffect(() => {
@@ -18,7 +21,7 @@ function App() {
          setTodos(todos) 
       }  
 
-    }, [])
+    },[])
     
     const saveToLocalStorage = ()=>{
       // Put the object into storage
@@ -75,24 +78,30 @@ function App() {
 
   }
   
+  const handelShowFinish = () => {
+    setShowFinish (!showFinish)
+    console.log(showFinish)
+  }
   
   return (
     <>
       <Navbar />
-      <div className="container bg-violet-200 mx-auto my-5 rounded-md p-2 min-h-[80vh]">
+      <div className="md:container bg-violet-200 mx-auto my-5 rounded-md p-2 min-h-[80vh]">
         <div className="container bg-white mx-auto my-5 rounded-md flex justify-between p-5 shadow-md">
           <input onChange={handelInput} value={todo} type="text" placeholder="write something...." className=" w-1/2  bg-violet-100 rounded-md p-3"/>
           <button
             onClick={handelAdd}
-            className="bg-[#8621eb] rounded-md px-10 text-white p-3"
+            disabled={todo.length<=3}
+            className="bg-[#8621eb] disabled:bg-[#ddc9f0] rounded-md px-10 text-white p-3"
           >
             Add
           </button>
         </div>
+        <input onChange={handelShowFinish} type="checkbox" checked={showFinish} name="" id="" /> Show Finished ToDos
         <div className="container"> 
          {todos.length === 0 && <div className="text-[#8621eb]  text-7xl text-center">Empty To-Do List!</div>}       
         {todos.map((item) => {
-          return (
+          return (showFinish || !item.isComplited) && (
             <div
               key={item.id}
               className="container bg-white mx-auto my-5 rounded-md flex justify-between p-5 shadow-md"
@@ -102,22 +111,24 @@ function App() {
                 className=""
                   onChange={handelCkeckBox}
                   type="checkbox"
-                  value={item.isComplited}
+                  checked={item.isComplited}
                   name={item.id}
                   id=""
                 />
-                <h3 className={item.isComplited ? "line-through" : ""}>
+                <h3 className={item.isComplited ? "line-through overflow-auto" : "overflow-auto"}>
                   {item.todo}
                 </h3>
               </div>
 
-              <div className="w-32 flex justify-between">
-                <button onClick={handelEdit} name={item.id} className="bg-[#8621eb] rounded-full p-2 text-white">
-                  Edit
+              <div >
+                <div className="w-32 flex justify-between md:displ">
+                <button onClick={handelEdit} name={item.id} className="bg-[#8621eb] rounded-full p-2 text-white ">
+                <FaEdit />
                 </button>
                 <button onClick={handelDelete} name={item.id} className="bg-[#8621eb] rounded-full p-2 text-white">
-                  Delete
+                <MdDeleteOutline />
                 </button>
+                </div>
               </div>
             </div>
           );
